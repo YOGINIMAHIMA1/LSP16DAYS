@@ -10,7 +10,7 @@
 #define BUFFER_SIZE 1024
 
 int main() {
-    int sock = 0;
+    int sockfd;
     struct sockaddr_in serv_addr;
     char *message = "Hello from client";
     char buffer[BUFFER_SIZE] = {0};
@@ -20,42 +20,45 @@ int main() {
     OpenSSL_add_ssl_algorithms();
 
     // Create socket file descriptor
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        perror("socket creation error");
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
 
     // Setup server address
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(PORT);
+
+    // Convert IPv4 address from text to binary form
     if (inet_pton(AF_INET, "SERVER_IP_ADDRESS", &serv_addr.sin_addr) <= 0) {
-        perror("invalid address / address not supported");
-        close(sock);
+        perror("Invalid address or Address not supported");
+        close(sockfd);
         exit(EXIT_FAILURE);
     }
 
-    // Connect to server
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        perror("connection failed");
-        close(sock);
+    // Connect to the server
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        perror("Connection failed");
+        close(sockfd);
         exit(EXIT_FAILURE);
     }
 
     // Create SSL context
     SSL_CTX *ctx = SSL_CTX_new(TLS_client_method());
     if (!ctx) {
-        perror("SSL_CTX_new");
-        close(sock);
+        perror("SSL_CTX_new failed");
+        close(sockfd);
         exit(EXIT_FAILURE);
     }
 
     // Create SSL structure and connect to server
     SSL *ssl = SSL_new(ctx);
-    SSL_set_fd(ssl, sock);
+    SSL_set_fd(ssl, sockfd);
     if (SSL_connect(ssl) <= 0) {
         ERR_print_errors_fp(stderr);
-        close(sock);
+        close(sockfd);
         SSL_free(ssl);
+        SSL_CTX_free(ctx);
         exit(EXIT_FAILURE);
     }
 
@@ -64,11 +67,18 @@ int main() {
     printf("Message sent: %s\n", message);
 
     // Read response from server
-    int valread = SSL_read(ssl, buffer, BUFFER_SIZE);
-    printf("Received from server: %s\n", buffer);
+    int bytes_received = SSL_read(ssl, buffer, BUFFER_SIZE);
+    if (bytes_received < 0) {
+        perror("Read failed");
+    } else {
+        printf("Server response: %s\n", buffer);
+    }
 
-    close(sock);
+    // Clean up
+    close(sockfd);
     SSL_free(ssl);
+    SSL_CTX_free(ctx);
     EVP_cleanup();
+
     return 0;
 }

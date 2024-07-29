@@ -34,14 +34,8 @@ void handleClient(int client_socket, SSL *ssl) {
 
 void *threadFunction(void *arg) {
     int client_socket = *(int *)arg;
-    SSL_CTX *ctx = SSL_CTX_new(TLS_server_method());
-
-    if (!ctx) {
-        perror("SSL_CTX_new");
-        close(client_socket);
-        pthread_exit(NULL);
-    }
-
+    free(arg);
+    SSL_CTX *ctx = (SSL_CTX *)arg;
     SSL *ssl = SSL_new(ctx);
     SSL_set_fd(ssl, client_socket);
 
@@ -55,6 +49,27 @@ void *threadFunction(void *arg) {
     handleClient(client_socket, ssl);
 }
 
+SSL_CTX *create_context() {
+    SSL_CTX *ctx = SSL_CTX_new(TLS_server_method());
+    if (!ctx) {
+        perror("SSL_CTX_new");
+        exit(EXIT_FAILURE);
+    }
+    return ctx;
+}
+
+void configure_context(SSL_CTX *ctx) {
+    // Set the certificate and key
+    if (SSL_CTX_use_certificate_file(ctx, "cert.pem", SSL_FILETYPE_PEM) <= 0) {
+        ERR_print_errors_fp(stderr);
+        exit(EXIT_FAILURE);
+    }
+    if (SSL_CTX_use_PrivateKey_file(ctx, "key.pem", SSL_FILETYPE_PEM) <= 0 ) {
+        ERR_print_errors_fp(stderr);
+        exit(EXIT_FAILURE);
+    }
+}
+
 int main() {
     int server_fd, new_socket;
     struct sockaddr_in address;
@@ -63,6 +78,10 @@ int main() {
     // Initialize OpenSSL
     SSL_load_error_strings();
     OpenSSL_add_ssl_algorithms();
+
+    // Create SSL context
+    SSL_CTX *ctx = create_context();
+    configure_context(ctx);
 
     // Create socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -97,13 +116,17 @@ int main() {
 
         // Create a new thread for each client connection
         pthread_t thread_id;
-        if (pthread_create(&thread_id, NULL, threadFunction, (void *)&new_socket) != 0) {
+        int *pclient = malloc(sizeof(int));
+        *pclient = new_socket;
+        if (pthread_create(&thread_id, NULL, threadFunction, pclient) != 0) {
             perror("pthread_create");
             close(new_socket);
+            free(pclient);
         }
     }
 
     close(server_fd);
+    SSL_CTX_free(ctx);
     EVP_cleanup();
     return 0;
 }

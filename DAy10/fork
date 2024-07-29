@@ -1,0 +1,15 @@
+#include <iostream>
+#include <unistd.h>
+using namespace std;
+int main(){
+    pid_t pid;
+    if(pid==0){
+        cout<<chil process<<" "<<pid<<endl;
+
+    }
+    else if(pid >1{
+        cout<<"parent process"<<" "<<pid<<endl;
+    })
+    else
+    cout<<"none";
+}

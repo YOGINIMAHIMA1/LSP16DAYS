@@ -1,0 +1,73 @@
+sudo apt update && sudo apt upgrade
+sudo apt install gcc build-essential libncurses-dev libssl-dev libelf-dev bison flex -y
+sudo apt install dwarves
+sudo apt clean && apt autoremove -y
+wget -P ~/ https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.15.44.tar.xz
+tar -xvf ~/linux-5.15.44.tar.xz -C ~/
+reboot
+cd linux-5.15.44
+mkdir helloworld
+nano helloworld/helloworld.c
++
+	#include <linux/kernel.h>
+	#include <linux/syscalls.h>
+
+	SYSCALL_DEFINE0(helloworld)
+
+	{
+    		printk("Hello World.\n");
+    		return 0;
+	}
++
+nano helloworld/Makefile
++
+	obj-y := helloworld.o
++
+nano Makefile
++
+	change extraversion to your id.
+	search core-y after block/ insert helloworld/
++
+nano include/linux/syscalls.h
++
+	navigate to bottom before endif and insert
+	asmlinkage long sys_helloworld(void);
++
+nano arch/x86/entry/syscalls/syscall_64.tbl
++
+	Navigate to the bottom of it. You will find a series of x32 system calls. Scroll to the section above it. This is the section of your interest. Add the following code at the end of this section respecting the chronology of the row as well as the format of the column. Use Tab for space.
+	*remeber the line number
+	insert
+	(linenum)     common  helloworld                sys_helloworld
++
+sudo make menuconfig (sudo make localmodconfig)
+edit .config file 
++
+	remove between "" on CONFIG_SYSTEM_TRUSTED_KEYS & CONFIG_SYSTEM_REVOCATIONS_KEYS
++
+sudo make -j4
+sudo make modules_install -j4
+sudo make install -j4
+sudo update-grub
+sudo shutdown -r now
+after that reboot into grub and select advanced options and this kernel
+
+after that make dir in home create a c program
+
++
+	#include <stdio.h>
+	#include <linux/kernel.h>
+	#include <sys/syscall.h>
+	#include <unistd.h>
+	
+	int main(){
+		long int checkcall = syscall(linenum---insert);
+		printf("System call .: sys_helloworld :. returned %1d \n",checkcall);
+		return 0;
+	}
++
+gcc programname.c
+./a.out
+dmesg
+
+sudo make clean -j4 (after installing go in kernel folder)

@@ -1,0 +1,79 @@
+Jab hum Real World ki chizo ko code ki form me dikhane ki koshish karte hai.
+Jaise hum apni duniya me chize dekhte hai unhe code me represent karte hai
+
+OOPS CONCEPT
+-class- ek blueprint hai jismein tum kisi chiz ki detail likhte ho. jaise ek car class banao usme car ke pas color, gear aur engine hote
+object - class se bante hai. jaise class car se tum apni marzi ka object bana sakte ho.
+
+abstraction- jaise car ke sare  imp parts hide kr do aur sirf upar ka hisa hi dikhao jaise acccelator aur steering.
+
+inheritance (virasat)
+jaise purani chize se kuch nayi chiz banana voh nayi chiz purani chiz ke bhi feture contain karegi kuch naye features ke sath.
+car ek class usse tumne do nayi class banayi vehicle aur bike ye dono class ke feature ke sath apne kuch naye feature 
+contain karegi.
+
+encapsulation-data aur function jo class ke andar hote hai unko ek sath combine kr do aur bahar se sirf jaruri chize hi dikhao.
+
+
+polymorphism(rang badlana)- jab ek chiz alag alag tarike se behave krti hai.
+jaise print function ko string print karane ke liye aur number print karane ke liye dono ke liye use kiys ja sakta
+
+abstraction- imp chiz dikhao  baki sab hide kr do jaise tv tum bahar se dekh sakte ho but use andar jo circuit work kr rahe tumhe
+unka kuch nahi pta.
+
+
+Polymorphism- matlab same interface ka use karke different type ke kam karana
+type of polymorphism
+1>compile time polymorphism (static binding)- jab hum same function ko alag alag op ke use karte hai aur konsa function call hoga 
+yeh compile (jab hum code likh rhe hote hai) time pe decide ho jata. isk method overloading ya op overloading bhi kehte hain
+
+
+1> method overloading- jab same function ko do alag alag kam ke liye use karte hai. 
+eg- area function use karke area of circle nikal sakte hai aur area of square
+
+2> operator overloading- 
+
+
+Runtime polymorphism- function kaunsa call hoga ye code jab chal raha hai tab decide hota hai.isse method overrding bhi
+kehte hai. yye inheritance ke sath use hota hai.
+
+ab dog class ka apna sound function jo Animalclass ke sound function ko replace ya override kar deg jab hum dog ka object
+banakar sound function ko call karenge . aise cat ks sound function animal ke sound ko replace ya override kar dega.
+jab hum cat ka object banakar sound function ko call karenge
+
+Toh method overriding ek function ko replace ya override kar diya jata hai runtime ke dauran. 
+isse hum methos overriding kehte hai.
+
+
+#Override" ka matlab hai kisi cheez ko "replace" ya "overwrite" karna, ya purani cheez ki jagah nayi cheez ko laana. Programming mein, method overriding 
+ek technique hai jismein child class apni parent class ke method ko apne hisaab se nayi definition de deti hai.
+
+
+Function is block of code that take parameter as input and perform operation on them and return output.
+types
+-inbuilt function
+-User defined function
+-Inline function
+-Recursive function- isme function khud ko hi call karta jab tak koi base case na mil jaye.
+
+
+class ek bluprint ya dhacha hoti object ke liye matlab class define karti hai  ek object ka structure aur behaviour kaisa hoga. 
+object ko class ka hum ek instance bhi keh sakte hai
+
+
+class: ek blueprint ya design hai jaise ghar ka naksha 
+object- us ghar ke nakshe ke anusar banaya gaya ghar 
+
+
+//encapsulation- giving access to private data through controlled public interface
+like you declare class student it has private members- rollno, subject, grade now you declare one 
+method such access which is in public it has the right to access these data members but nobody outside this class 
+cannot access these data members.
+
+- Data member aur member function ko ek sath badhana. jahan par aap private data ko direct access se protect karte ho aur us 
+data ko access karne ke liye public method ka use karte ho.
+
+//abstraction hide kr do  complicated stuff sirf imp data show kro
+
+// inheritance- derived class inherit krti kuch feature apne parent class se aur usme kuch additional features hote hai
+polymorphism- same function naem but different op performing.

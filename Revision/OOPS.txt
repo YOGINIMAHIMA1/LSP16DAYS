@@ -77,3 +77,11 @@ data ko access karne ke liye public method ka use karte ho.
 
 // inheritance- derived class inherit krti kuch feature apne parent class se aur usme kuch additional features hote hai
 polymorphism- same function naem but different op performing.
+
+//constructor- automatically invoke ho jata hai jab class ka object create hota hai agar hum 
+    //custom constructor banate hai toh implicit constructor call nahi hota joh constructor 
+    // humne create kiya hai voh call hota hai
+    // iska naam same hota hai as class name
+    //iska koi return type nahi hota
+    // only call once when object created
+    //memory allocation happens when constructor is called

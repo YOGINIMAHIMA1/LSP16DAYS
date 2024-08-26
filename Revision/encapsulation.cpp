@@ -1,3 +1,7 @@
+// wrapping up data member and member function into a single unit called class. but these
+// data member cannot be accessible outside the class only accessible by those  member function 
+//present inside class
+
 #include <iostream>
 using namespace std;
  class student{

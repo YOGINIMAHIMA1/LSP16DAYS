@@ -1,0 +1,13 @@
+Server- ek aisa system hai jo data store karta usko process karta request pe dusre device ya 
+application ko service provide karta hai. server aur client ke bich me ek relationship hota hai jisme client request
+karta hai aur server us request ko proceed karke service provide karta hai.
+
+socket ek communication mechanism hai jisme jo do computer ya device ke bich me data exchange karane ke liye
+use larte hai.ek computer data send karta hai aur dusra recieve karta karta.
+socket ek endpoint hai jo communication create karta hai do process ke bich me . yeh process same machine
+ya different machine par bhi ho sakte hai.
+ex-  communication between client server model
+
+TCP- connection oriented hote hai yeh secure hote hai data ko sequence me execute karte hai data loss hone se bachate hai
+but slow hote hai
+Udp - YEH FAst hote hai , secure nahi hai , data loss ho sakta hai ,sequence me execute nahi hote.

@@ -1,0 +1,18 @@
+inheritance- derived class has some featue of base class and having some additional features
+types of inheritance
+- single level inheritance- one base class having one derived class
+-Multiple inheritance- one derived class is inherit about more than one base class
+-Multilevel inheritance - one derived class inherit from another derived class 
+-Hybrid inheritance- combination of more than one inheritance
+-hierarchial inheritance -multiple derived class inherit from same base class
+
+
+#constructor overloading - jab program me do ya dos e zyda construcotr hai but unker paramter different hai.
+polymorphism ka example hai constructor overloading
+
+
+this pointer ka use tab karte hai jab class ke data member aur function me pass kiye paramter ke name same hai
+taki confusion na ho data member konsa hai aur parmaeter kon hai.
+
+
+copy constructor ka kam hota hai ek object ki properties copy krke dusre object me dal dena.

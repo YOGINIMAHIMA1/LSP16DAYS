@@ -1,0 +1,22 @@
+Static Allocation: Agar aapne koi object stack ya static memory pe allocate kiya hai, toh object ka destructor automatically tab call hota hai jab function ya scope khatam hota hai. Isme aapko manually kuch nahi karna padta.
+
+Example:
+
+cpp
+Copy code
+void function() {
+    MyClass obj;  // Static allocation
+    // Destructor automatically called when function ends
+}  // Destructor yaha call hoga
+Dynamic Allocation ke saath Destructor
+Dynamic Allocation: Jab aap new operator use karke heap pe memory allocate karte hain, tab destructor tab tak call nahi hota jab tak aap delete operator use karke memory free nahi karte. Yaha aapko manually destructor ko indirectly call karna padta hai by using delete.
+
+Example:
+
+cpp
+Copy code
+void function() {
+    MyClass* obj = new MyClass();  // Dynamic allocation
+    // Destructor manually call karna hoga
+    delete obj;  // Destructor yaha call hoga
+}
